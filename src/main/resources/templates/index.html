@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Portfolio</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container-fluid" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-1">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1 class="panel-title">Portfolio</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive" th:if="${not #lists.isEmpty(stocks)}">
+                        <table class="table table-hover ">
+                            <thead class="thead-inverse">
+                            <tr>
+                            	<th>Symbol</th>
+                                <th>Shares #</th>
+                                <th>Purchase Price $</th>
+                                <th>Yesterday's Price $</th>
+                                <th>Current Price $</th>
+                                <th>Change $</th>
+                                <th>Change %</th>
+                                <th>Day's Gain $</th>
+                                <th>Day's Gain %</th>
+                            </tr>
+                            </thead>
+                            <tr th:remove="all">
+                                <td><p class="text-left">Test1</td>
+                                <td><p class="text-right">99</td>
+                                <td><p class="text-right">$99.99</td>
+                                <td><p class="text-right">$98.59</td>
+                                <td><p class="text-right">$9.99</td>
+                                <td><p class="text-right">-$89.01</td>
+                                <td><p class="text-right">-90.01%</td>
+                                <td><p class="text-right">-$89.01</td>
+                                <td><p class="text-right">-90.03%</td>
+                            </tr>
+                            <tr th:remove="all">
+                                <td><p class="text-left">Test2</td>
+                                <td><p class="text-right">33</td>
+                                <td><p class="text-right">$33.33</td>
+                                <td><p class="text-right">$3.33</td>
+                                <td><p class="text-right">$9.99</td>
+                                <td><p class="text-right">-$89.01</td>
+                                <td><p class="text-right">-90.01%</td>
+                                <td><p class="text-right">-$89.01</td>
+                                <td><p class="text-right">-90.03%</td>
+                            </tr>
+                            <tr th:each="stock : ${stocks}">
+                                <td th:text="${stock.stockSymbol}" align="left">Test3</td>
+                                <td th:text="${stock.numberOfShares}" align="right">3</td>
+                                <td th:text="${stock.sharePurchasePrice}" align="right">$0.23</td>
+                                <td th:text="${stock.yesterdaysPrice}" align="right">$1.15</td>
+                                <td th:text="${stock.shareCurrentPrice}" align="right">$1.23</td>
+                                <td th:text="${stock.changeDollars}" align="right">$1.23</td>
+                                <td th:text="${stock.changePercent}" align="right">$1.23</td>
+                                <td th:text="${stock.daysChangeDollars}" align="right">$1.23</td>
+                                <td th:text="${stock.daysChangePercent}" align="right">$1.23</td>
+                            </tr>
+                        	<tr>
+                        		<td><a href="stock/add.html" th:href="@{stock/add}">Add Stock</a></td>
+                        		<td><a href="stock/modify.html" th:href="@{stock/modify}">Modify Portfolio</a></td>
+                        		<td align="right"><a href="http://finance.yahoo.com">link</a></td>
+                       		</tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
