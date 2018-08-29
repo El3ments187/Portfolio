@@ -65,6 +65,26 @@
 			<version>3.3.7-1</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-csv</artifactId>
+		    <version>1.5</version>
+		</dependency>
+		
+		<!-- version 2 (latest) https://github.com/barchart/barchart-ondemand-client-java -->
+		<dependency>
+			<groupId>com.barchart.base</groupId>
+			<artifactId>barchart-ondemand-client</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
+		<dependency>
+		    <groupId>com.squareup.okhttp</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>2.7.5</version>
+		</dependency>
 		
 	</dependencies>
 

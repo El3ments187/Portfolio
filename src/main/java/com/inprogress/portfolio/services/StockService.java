@@ -1,17 +1,21 @@
 package com.inprogress.portfolio.services;
 
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import com.inprogress.portfolio.commands.StockCommand;
 import com.inprogress.portfolio.domain.Stock;
 
 /**
- * Created by jt on 6/13/17.
+ * Created by David Munsell on 8/28/18.
  */
 public interface StockService {
 
     Set<Stock> getStocks();
+    
+    List<Stock> getStockList();
 
     Stock findById(Long l);
 
@@ -20,4 +24,9 @@ public interface StockService {
     StockCommand saveStockCommand(StockCommand command);
 
     void deleteById(Long idToDelete);
+    
+    BigDecimal getStockCurrentPriceFromWeb(Long l);
+    
+    BigDecimal getStockYesterdaysPriceFromWeb(Long l);
+    
 }

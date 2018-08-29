@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Created by jt on 6/13/17.
+ * Created by David Munsell on 8/28/18.
  */
 @Getter
 @Setter
@@ -24,8 +24,8 @@ public class Stock {
 
     private String stockSymbol;
     private Integer numberOfShares;
-    private BigDecimal sharePurchasePrice;
-    private BigDecimal shareCurrentPrice;
+    private BigDecimal stockPurchasePrice;
+    private BigDecimal stockCurrentPrice;
     
     //TODO: Remove
     private BigDecimal yesterdaysPrice;

@@ -1,6 +1,9 @@
 package com.inprogress.portfolio.bootstrap;
 
-import lombok.extern.slf4j.Slf4j;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -9,13 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.inprogress.portfolio.domain.Stock;
 import com.inprogress.portfolio.repositories.StockRepository;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Created by jt on 6/13/17.
+ * Created by David Munsell on 7/31/18.
  */
 @Slf4j
 @Component
@@ -42,8 +42,8 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         
         stock1.setStockSymbol("AAPL");
         stock1.setNumberOfShares(10);
-        stock1.setSharePurchasePrice(new BigDecimal(13.20));
-        stock1.setShareCurrentPrice(new BigDecimal(15.23));
+        stock1.setStockPurchasePrice(new BigDecimal(13.20));
+        //stock1.setStockCurrentPrice(new BigDecimal(15.23));
         //TODO
         stock1.setYesterdaysPrice(new BigDecimal(14.93));
         
@@ -51,8 +51,8 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         
         stock2.setStockSymbol("F");
         stock2.setNumberOfShares(13);
-        stock2.setSharePurchasePrice(new BigDecimal(138.21));
-        stock2.setShareCurrentPrice(new BigDecimal(122.89));
+        stock2.setStockPurchasePrice(new BigDecimal(138.21));
+        //stock2.setStockCurrentPrice(new BigDecimal(122.89));
         //TODO
         stock2.setYesterdaysPrice(new BigDecimal(141.22));
         
@@ -60,8 +60,8 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         
         stock3.setStockSymbol("BP");
         stock3.setNumberOfShares(1350);
-        stock3.setSharePurchasePrice(new BigDecimal(60.21));
-        stock3.setShareCurrentPrice(new BigDecimal(72.49));
+        stock3.setStockPurchasePrice(new BigDecimal(60.21));
+        //stock3.setStockCurrentPrice(new BigDecimal(72.49));
         //TODO
         stock3.setYesterdaysPrice(new BigDecimal(73.21));
         
@@ -71,4 +71,66 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         
         return stocks;
     }
+        
+        
+/*    private List<StockHistory> getStockHistoryToday() {
+
+        List<StockHistory> stockHistory = new ArrayList<>(2);
+
+        StockHistory stock1 = new StockHistory();
+        
+        stock1.setStockSymbol("AAPL");
+        stock1.setClosingPrice(new BigDecimal(15.34));
+        stock1.setDate(LocalDate.now());
+
+        StockHistory stock2 = new StockHistory();
+        
+        stock2.setStockSymbol("F");
+        stock2.setClosingPrice(new BigDecimal(13.21));
+        stock2.setDate(LocalDate.now());
+        
+        StockHistory stock3 = new StockHistory();
+        
+        stock3.setStockSymbol("BP");
+        stock3.setClosingPrice(new BigDecimal(22.34));
+        stock3.setDate(LocalDate.now());
+        
+        stockHistory.add(stock1);
+        stockHistory.add(stock2);
+        stockHistory.add(stock3);
+        
+        return stockHistory;
+    }
+    
+    private List<StockHistory> getStockHistoryYesterday() {
+
+        List<StockHistory> stockHistory = new ArrayList<>(2);
+        
+        LocalDate today = LocalDate.now();
+        LocalDate yesterday = today.minus(Period.ofDays(1));
+
+        StockHistory stock1 = new StockHistory();
+        
+        stock1.setStockSymbol("AAPL");
+        stock1.setClosingPrice(new BigDecimal(13));
+        stock1.setDate(yesterday);
+
+        StockHistory stock2 = new StockHistory();
+        
+        stock2.setStockSymbol("F");
+        stock2.setClosingPrice(new BigDecimal(13));
+        stock2.setDate(yesterday);
+        
+        StockHistory stock3 = new StockHistory();
+        
+        stock3.setStockSymbol("BP");
+        stock3.setClosingPrice(new BigDecimal(13));
+        stock3.setDate(yesterday);
+        
+        stockHistory.add(stock1);
+        stockHistory.add(stock2);
+        stockHistory.add(stock3);
+        
+        return stockHistory;
+    }*/
 }

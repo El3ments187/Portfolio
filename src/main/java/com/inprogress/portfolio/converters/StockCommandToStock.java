@@ -13,7 +13,7 @@ import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Created by jt on 6/21/17.
+ * Created by David Munsell on 7/31/18.
  */
 @Component
 @NoArgsConstructor
@@ -34,8 +34,8 @@ public class StockCommandToStock implements Converter<StockCommand, Stock> {
         stock.setId(source.getId());
         stock.setStockSymbol(source.getStockSymbol());
         stock.setNumberOfShares(source.getNumberOfShares());
-        stock.setSharePurchasePrice(source.getSharePurchasePrice());
-        stock.setShareCurrentPrice(source.getShareCurrentPrice());
+        stock.setStockPurchasePrice(source.getSharePurchasePrice());
+        stock.setStockCurrentPrice(source.getShareCurrentPrice());
         
 		return stock;
 	}

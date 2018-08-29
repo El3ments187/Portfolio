@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inprogress.portfolio.domain.Stock;
 import com.inprogress.portfolio.services.StockService;
+import com.inprogress.portfolio.webparser.BarchartQuoteFetcher;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,10 +42,18 @@ public class IndexController {
         // Create a list of stocks so they can be sorted by stock symbol.
         List<Stock> stockList = new ArrayList<Stock>(stocks);
         stockList.sort(Comparator.comparing(Stock::getStockSymbol));
-        
+       
         for(Stock stock:stocks) {
-        	BigDecimal purchase = stock.getSharePurchasePrice();
-        	BigDecimal current = stock.getShareCurrentPrice();
+        	BigDecimal purchase = stock.getStockPurchasePrice();
+        	
+        	BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
+        	
+        	String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
+
+        	BigDecimal current = new BigDecimal(stockQuoteArray[2]);
+        	stock.setStockCurrentPrice(current);
+        	
+        	
         	
         	stock.setChangeDollars(purchase.subtract(current));
         	stock.setChangePercent(purchase.divide(current, BigDecimal.ROUND_HALF_UP));

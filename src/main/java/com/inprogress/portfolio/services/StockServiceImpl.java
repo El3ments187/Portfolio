@@ -1,6 +1,8 @@
 package com.inprogress.portfolio.services;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -74,4 +76,22 @@ public class StockServiceImpl implements StockService {
     public void deleteById(Long idToDelete) {
         stockRepository.deleteById(idToDelete);
     }
+
+	@Override
+	public List<Stock> getStockList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal getStockCurrentPriceFromWeb(Long l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal getStockYesterdaysPriceFromWeb(Long l) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
