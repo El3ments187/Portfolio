@@ -24,8 +24,8 @@ public class StockCommand {
 
     private Integer numberOfShares;
 
-    private BigDecimal sharePurchasePrice;
+    private BigDecimal stockPurchasePrice;
 
-    private BigDecimal shareCurrentPrice;
+    private BigDecimal stockCurrentPrice;
 
 }

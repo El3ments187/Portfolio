@@ -34,8 +34,7 @@ public class StockCommandToStock implements Converter<StockCommand, Stock> {
         stock.setId(source.getId());
         stock.setStockSymbol(source.getStockSymbol());
         stock.setNumberOfShares(source.getNumberOfShares());
-        stock.setStockPurchasePrice(source.getSharePurchasePrice());
-        stock.setStockCurrentPrice(source.getShareCurrentPrice());
+        stock.setStockPurchasePrice(source.getStockPurchasePrice());
         
 		return stock;
 	}

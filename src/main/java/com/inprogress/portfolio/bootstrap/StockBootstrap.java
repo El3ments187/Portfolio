@@ -40,34 +40,60 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
 
         Stock stock1 = new Stock();
         
-        stock1.setStockSymbol("AAPL");
-        stock1.setNumberOfShares(10);
-        stock1.setStockPurchasePrice(new BigDecimal(13.20));
-        //stock1.setStockCurrentPrice(new BigDecimal(15.23));
-        //TODO
-        stock1.setYesterdaysPrice(new BigDecimal(14.93));
+        stock1.setStockSymbol("ARKW");
+        stock1.setNumberOfShares(35);
+        stock1.setStockPurchasePrice(new BigDecimal(56.775));
         
         Stock stock2 = new Stock();
         
-        stock2.setStockSymbol("F");
-        stock2.setNumberOfShares(13);
-        stock2.setStockPurchasePrice(new BigDecimal(138.21));
-        //stock2.setStockCurrentPrice(new BigDecimal(122.89));
-        //TODO
-        stock2.setYesterdaysPrice(new BigDecimal(141.22));
+        stock2.setStockSymbol("BP");
+        stock2.setNumberOfShares(60);
+        stock2.setStockPurchasePrice(new BigDecimal(33.80));
         
         Stock stock3 = new Stock();
         
-        stock3.setStockSymbol("BP");
-        stock3.setNumberOfShares(1350);
-        stock3.setStockPurchasePrice(new BigDecimal(60.21));
-        //stock3.setStockCurrentPrice(new BigDecimal(72.49));
-        //TODO
-        stock3.setYesterdaysPrice(new BigDecimal(73.21));
+        stock3.setStockSymbol("CMG");
+        stock3.setNumberOfShares(3);
+        stock3.setStockPurchasePrice(new BigDecimal(367.3167));
+        
+        Stock stock4 = new Stock();
+        
+        stock4.setStockSymbol("EXPR");
+        stock4.setNumberOfShares(660);
+        stock4.setStockPurchasePrice(new BigDecimal(9.8806));
+        
+        Stock stock5 = new Stock();
+        
+        stock5.setStockSymbol("PBF");
+        stock5.setNumberOfShares(230);
+        stock5.setStockPurchasePrice(new BigDecimal(22.6807));
+        
+        Stock stock6 = new Stock();
+        
+        stock6.setStockSymbol("PSX");
+        stock6.setNumberOfShares(51);
+        stock6.setStockPurchasePrice(new BigDecimal(51));
+        
+        Stock stock7 = new Stock();
+        
+        stock7.setStockSymbol("UPRO");
+        stock7.setNumberOfShares(45);
+        stock7.setStockPurchasePrice(new BigDecimal(45.464));
+        
+        Stock stock8 = new Stock();
+        
+        stock8.setStockSymbol("VB");
+        stock8.setNumberOfShares(7);
+        stock8.setStockPurchasePrice(new BigDecimal(108.9086));
         
         stocks.add(stock1);
         stocks.add(stock2);
         stocks.add(stock3);
+        stocks.add(stock4);
+        stocks.add(stock5);
+        stocks.add(stock6);
+        stocks.add(stock7);
+        stocks.add(stock8);
         
         return stocks;
     }

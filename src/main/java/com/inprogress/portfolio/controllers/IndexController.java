@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.inprogress.portfolio.domain.Stock;
+import com.inprogress.portfolio.guidisplaypojos.StockDisplayPojo;
 import com.inprogress.portfolio.services.StockService;
 import com.inprogress.portfolio.webparser.BarchartQuoteFetcher;
 
@@ -32,39 +33,45 @@ public class IndexController {
     @RequestMapping({"", "/", "/index"})
     public String getIndexPage(Model model) {
         log.debug("Getting Index page");
+        
+        List<StockDisplayPojo> stockDisplayList = new ArrayList<StockDisplayPojo>();
 
         Set<Stock> stocks = stockService.getStocks();
         
+        BigDecimal allStocksTotalGainInDollars = new BigDecimal(0);
+        
         log.debug("Stock List : " + stocks);
         
-        //model.addAttribute("stocks", stocks);
-
-        // Create a list of stocks so they can be sorted by stock symbol.
-        List<Stock> stockList = new ArrayList<Stock>(stocks);
-        stockList.sort(Comparator.comparing(Stock::getStockSymbol));
-       
         for(Stock stock:stocks) {
-        	BigDecimal purchase = stock.getStockPurchasePrice();
+        	StockDisplayPojo stockDisplay = new StockDisplayPojo();
         	
         	BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
-        	
         	String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
-
-        	BigDecimal current = new BigDecimal(stockQuoteArray[2]);
-        	stock.setStockCurrentPrice(current);
         	
+        	BigDecimal netChangeInDollars = new BigDecimal(stockQuoteArray[4]);
+        	BigDecimal currentNumberOfChares = new BigDecimal(stock.getNumberOfShares());
+        	BigDecimal daysTotalGain = netChangeInDollars.multiply(currentNumberOfChares);
         	
+        	allStocksTotalGainInDollars = allStocksTotalGainInDollars.add(daysTotalGain);
         	
-        	stock.setChangeDollars(purchase.subtract(current));
-        	stock.setChangePercent(purchase.divide(current, BigDecimal.ROUND_HALF_UP));
+        	stockDisplay.setStockSymbol(stock.getStockSymbol());
+        	stockDisplay.setCompanyName(stockQuoteArray[1]);
+        	stockDisplay.setNumberOfShares(String.valueOf(stock.getNumberOfShares()));
+        	stockDisplay.setStockPurchasePrice(String.valueOf(stock.getStockPurchasePrice()));
+        	stockDisplay.setLastPrice(stockQuoteArray[2]);
+        	stockDisplay.setNetChangeInDollars(stockQuoteArray[4]);
+        	stockDisplay.setPercentChange(stockQuoteArray[5]);
+        	stockDisplay.setDaysTotalGain(String.valueOf(daysTotalGain));
         	
-        	BigDecimal yesterday = stock.getYesterdaysPrice();
-        	stock.setDaysChangeDollars(yesterday.subtract(current));
-        	stock.setDaysChangePercent(yesterday.divide(current, BigDecimal.ROUND_HALF_UP));
-        	//stockList.add(stock);
+        	stockDisplayList.add(stockDisplay);
         }
         
-        model.addAttribute("stocks", stockList);
+        stockDisplayList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
+        
+        model.addAttribute("stocks", stockDisplayList);
+        model.addAttribute("daysTotalGainDollars", allStocksTotalGainInDollars);
+        
+        log.debug("Day's Total Gain in Dollars : " + allStocksTotalGainInDollars.toString());
 
         return "index";
     }
