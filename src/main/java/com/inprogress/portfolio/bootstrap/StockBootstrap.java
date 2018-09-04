@@ -41,49 +41,49 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         Stock stock1 = new Stock();
         
         stock1.setStockSymbol("ARKW");
-        stock1.setNumberOfShares(35);
+        stock1.setNumberOfShares(35.0);
         stock1.setStockPurchasePrice(new BigDecimal(56.775));
         
         Stock stock2 = new Stock();
         
         stock2.setStockSymbol("BP");
-        stock2.setNumberOfShares(60);
+        stock2.setNumberOfShares(60.0);
         stock2.setStockPurchasePrice(new BigDecimal(33.80));
         
         Stock stock3 = new Stock();
         
         stock3.setStockSymbol("CMG");
-        stock3.setNumberOfShares(3);
+        stock3.setNumberOfShares((double) 3);
         stock3.setStockPurchasePrice(new BigDecimal(367.3167));
         
         Stock stock4 = new Stock();
         
         stock4.setStockSymbol("EXPR");
-        stock4.setNumberOfShares(660);
+        stock4.setNumberOfShares(660.0);
         stock4.setStockPurchasePrice(new BigDecimal(9.8806));
         
         Stock stock5 = new Stock();
         
         stock5.setStockSymbol("PBF");
-        stock5.setNumberOfShares(230);
+        stock5.setNumberOfShares(229.96233);
         stock5.setStockPurchasePrice(new BigDecimal(22.6807));
         
         Stock stock6 = new Stock();
         
         stock6.setStockSymbol("PSX");
-        stock6.setNumberOfShares(51);
-        stock6.setStockPurchasePrice(new BigDecimal(51));
+        stock6.setNumberOfShares(51.0912);
+        stock6.setStockPurchasePrice(new BigDecimal(51.0912));
         
         Stock stock7 = new Stock();
         
         stock7.setStockSymbol("UPRO");
-        stock7.setNumberOfShares(45);
+        stock7.setNumberOfShares(45.0);
         stock7.setStockPurchasePrice(new BigDecimal(45.464));
         
         Stock stock8 = new Stock();
         
         stock8.setStockSymbol("VB");
-        stock8.setNumberOfShares(7);
+        stock8.setNumberOfShares(7.04547);
         stock8.setStockPurchasePrice(new BigDecimal(108.9086));
         
         stocks.add(stock1);

@@ -60,11 +60,11 @@
 	            <td th:text="${stock.stockSymbol}" align="left">Test3</td>
         	    <td th:text="${stock.companyName}" align="left">3</td>
 	            <td th:text="${stock.numberOfShares}" align="left">3</td>
-	            <td th:text="${stock.stockPurchasePrice}" align="left">$0.23</td>
-	            <td th:text="${stock.lastPrice}" align="left">$1.23</td>
-	            <td th:text="${stock.netChangeInDollars}" align="left">$1.23</td>
-	            <td th:text="${stock.percentChange}" align="left">$1.23</td>
-	            <td th:text="${stock.daysTotalGain}" align="left">$1.23</td>
+	            <td th:text="${(stock.stockPurchasePrice)}" align="left">$0.23</td>
+	            <td th:text="${(stock.lastPrice)}" align="left">$1.23</td>
+	            <td th:text="${(stock.netChangeInDollars)}" align="left">$1.23</td>
+	            <td th:text="${(stock.percentChange) + '%'}" align="left">$1.23</td>
+	            <td th:text="${(stock.daysTotalGain)}" align="left">$1.23</td>
 	        </tr>
 	    	<tr>
 	    		<td><a href="stock/add.html" th:href="@{stock/add}">Add Stock</a></td>
@@ -74,7 +74,7 @@
 	    		<td></td>
 	    		<td></td>
 	    		<td></td>
-	    		<td th:text="${daysTotalGainDollars}"></td>
+	    		<td th:text="${(daysTotalGainDollars)}"></td>
 	   		</tr>
    		</tbody>
     </table>

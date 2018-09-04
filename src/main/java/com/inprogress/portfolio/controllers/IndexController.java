@@ -1,9 +1,12 @@
 package com.inprogress.portfolio.controllers;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.springframework.stereotype.Controller;
@@ -40,13 +43,28 @@ public class IndexController {
         
         BigDecimal allStocksTotalGainInDollars = new BigDecimal(0);
         
+        DecimalFormat dollarFormatter = new DecimalFormat("$#,##0.00");
+        dollarFormatter.setParseBigDecimal(true);
+        
+        DecimalFormat shareFormatter = new DecimalFormat();
+        shareFormatter.setDecimalSeparatorAlwaysShown(false);
+                
+        //NumberFormat us = NumberFormat.getCurrencyInstance(Locale.US);
+        
         log.debug("Stock List : " + stocks);
         
         for(Stock stock:stocks) {
         	StockDisplayPojo stockDisplay = new StockDisplayPojo();
         	
-        	BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
-        	String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
+        	//BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
+        	//String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
+        	
+        	String[] stockQuoteArray = new String[8];
+        	
+        	stockQuoteArray[1] = "Temp Company Name";
+        	stockQuoteArray[2] = "12.31";
+        	stockQuoteArray[4] = "-2.42";
+        	stockQuoteArray[5] = "10.3";
         	
         	BigDecimal netChangeInDollars = new BigDecimal(stockQuoteArray[4]);
         	BigDecimal currentNumberOfChares = new BigDecimal(stock.getNumberOfShares());
@@ -56,12 +74,13 @@ public class IndexController {
         	
         	stockDisplay.setStockSymbol(stock.getStockSymbol());
         	stockDisplay.setCompanyName(stockQuoteArray[1]);
-        	stockDisplay.setNumberOfShares(String.valueOf(stock.getNumberOfShares()));
-        	stockDisplay.setStockPurchasePrice(String.valueOf(stock.getStockPurchasePrice()));
-        	stockDisplay.setLastPrice(stockQuoteArray[2]);
-        	stockDisplay.setNetChangeInDollars(stockQuoteArray[4]);
+        	stockDisplay.setNumberOfShares(shareFormatter.format(stock.getNumberOfShares()));
+        	stockDisplay.setStockPurchasePrice(dollarFormatter.format(stock.getStockPurchasePrice()));
+        	stockDisplay.setLastPrice(dollarFormatter.format(new BigDecimal(stockQuoteArray[2])));
+        	stockDisplay.setNetChangeInDollars(dollarFormatter.format(new BigDecimal(stockQuoteArray[4])));
         	stockDisplay.setPercentChange(stockQuoteArray[5]);
-        	stockDisplay.setDaysTotalGain(String.valueOf(daysTotalGain));
+        	
+        	stockDisplay.setDaysTotalGain(dollarFormatter.format(daysTotalGain));
         	
         	stockDisplayList.add(stockDisplay);
         }
@@ -69,7 +88,7 @@ public class IndexController {
         stockDisplayList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
         
         model.addAttribute("stocks", stockDisplayList);
-        model.addAttribute("daysTotalGainDollars", allStocksTotalGainInDollars);
+        model.addAttribute("daysTotalGainDollars", dollarFormatter.format(allStocksTotalGainInDollars));
         
         log.debug("Day's Total Gain in Dollars : " + allStocksTotalGainInDollars.toString());
 
