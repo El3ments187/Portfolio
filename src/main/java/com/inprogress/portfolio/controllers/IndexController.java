@@ -56,18 +56,18 @@ public class IndexController {
         for(Stock stock:stocks) {
         	StockDisplayPojo stockDisplay = new StockDisplayPojo();
         	
-        	//BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
-        	//String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
+        	BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
+        	String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
         	
-        	String[] stockQuoteArray = new String[8];
+/*        	String[] stockQuoteArray = new String[8];
         	
         	stockQuoteArray[1] = "Temp Company Name";
         	stockQuoteArray[2] = "12.31";
         	stockQuoteArray[4] = "-2.42";
-        	stockQuoteArray[5] = "10.3";
+        	stockQuoteArray[5] = "10.3";*/
         	
         	BigDecimal netChangeInDollars = new BigDecimal(stockQuoteArray[4]);
-        	BigDecimal currentNumberOfChares = new BigDecimal(stock.getNumberOfShares());
+        	BigDecimal currentNumberOfChares = stock.getNumberOfShares();
         	BigDecimal daysTotalGain = netChangeInDollars.multiply(currentNumberOfChares);
         	
         	allStocksTotalGainInDollars = allStocksTotalGainInDollars.add(daysTotalGain);
@@ -88,6 +88,8 @@ public class IndexController {
         stockDisplayList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
         
         model.addAttribute("stocks", stockDisplayList);
+        
+        allStocksTotalGainInDollars.setScale(2, BigDecimal.ROUND_HALF_UP);
         model.addAttribute("daysTotalGainDollars", dollarFormatter.format(allStocksTotalGainInDollars));
         
         log.debug("Day's Total Gain in Dollars : " + allStocksTotalGainInDollars.toString());

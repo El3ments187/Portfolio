@@ -22,7 +22,7 @@ public class StockCommand {
     @Size(min = 1, max = 10)
     private String stockSymbol;
 
-    private Integer numberOfShares;
+    private BigDecimal numberOfShares;
 
     private BigDecimal stockPurchasePrice;
 

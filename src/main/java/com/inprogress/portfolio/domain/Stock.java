@@ -23,7 +23,7 @@ public class Stock {
     private Long id;
 
     private String stockSymbol;
-    private Double numberOfShares;
+    private BigDecimal numberOfShares;
     private BigDecimal stockPurchasePrice;
     
     // Display only the stock symbol to make debugging easier

@@ -33,7 +33,6 @@
                             	<th>Symbol</th>
                                 <th>Shares #</th>
                                 <th>Purchase Price $</th>
-                                <th>Current Price $</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -41,7 +40,6 @@
                                 <td th:text="${stock.stockSymbol}" align="left">Test3</td>
                                 <td th:text="${stock.numberOfShares}" align="right">3</td>
                                 <td th:text="${stock.stockPurchasePrice}" align="right">$0.23</td>
-                                <td th:text="${stock.stockCurrentPrice}" align="right">$1.23</td>
                                 <td align="right"><a href="delete.html" th:href="@{${stock.id} + '/delete'}">Permanently Delete</a></td>
                             </tr>
                         	<tr>
