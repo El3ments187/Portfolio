@@ -1,6 +1,7 @@
 package com.inprogress.portfolio.services;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -79,19 +80,14 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public List<Stock> getStockList() {
-		// TODO Auto-generated method stub
-		return null;
+        log.debug("Stock service reached.");
+
+        List<Stock> stockList = new ArrayList<Stock>();
+        stockRepository.findAll().iterator().forEachRemaining(stockList::add);
+        
+        // Sort list by Stock Symbol
+        stockList.sort(Comparator.comparing(Stock::getStockSymbol));
+        return stockList;
 	}
 
-	@Override
-	public BigDecimal getStockCurrentPriceFromWeb(Long l) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BigDecimal getStockYesterdaysPriceFromWeb(Long l) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -2,21 +2,15 @@ package com.inprogress.portfolio.controllers;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.inprogress.portfolio.domain.Stock;
 import com.inprogress.portfolio.guidisplaypojos.StockDisplayPojo;
-import com.inprogress.portfolio.services.StockService;
-import com.inprogress.portfolio.webparser.BarchartQuoteFetcher;
+import com.inprogress.portfolio.services.StockQuoteCurrentServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,20 +21,16 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class IndexController {
 
-    private final StockService stockService;
+    private final StockQuoteCurrentServiceImpl stockQuoteService;
 
-    public IndexController(StockService stockService) {
-        this.stockService = stockService;
+    public IndexController(StockQuoteCurrentServiceImpl stockQuoteService) {
+        this.stockQuoteService = stockQuoteService;
     }
 
     @RequestMapping({"", "/", "/index"})
     public String getIndexPage(Model model) {
         log.debug("Getting Index page");
-        
-        List<StockDisplayPojo> stockDisplayList = new ArrayList<StockDisplayPojo>();
 
-        Set<Stock> stocks = stockService.getStocks();
-        
         BigDecimal allStocksTotalGainInDollars = new BigDecimal(0);
         
         DecimalFormat dollarFormatter = new DecimalFormat("$#,##0.00");
@@ -48,23 +38,16 @@ public class IndexController {
         
         DecimalFormat shareFormatter = new DecimalFormat();
         shareFormatter.setDecimalSeparatorAlwaysShown(false);
-                
-        //NumberFormat us = NumberFormat.getCurrencyInstance(Locale.US);
         
-        log.debug("Stock List : " + stocks);
+        List<StockDisplayPojo> stockDisplayPojoList = stockQuoteService.getSortedListOfStockDisplayPojosForIndexPage();
         
-        for(Stock stock:stocks) {
+        log.debug("Stock List : " + stockDisplayPojoList);
+        
+/*        for(Stock stock:stocks) {
         	StockDisplayPojo stockDisplay = new StockDisplayPojo();
         	
         	BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
-        	String[] stockQuoteArray = fetcher.fetchCurrentPrice(stock.getStockSymbol());
-        	
-/*        	String[] stockQuoteArray = new String[8];
-        	
-        	stockQuoteArray[1] = "Temp Company Name";
-        	stockQuoteArray[2] = "12.31";
-        	stockQuoteArray[4] = "-2.42";
-        	stockQuoteArray[5] = "10.3";*/
+        	String[] stockQuoteArray = fetcher.fetchCurrentStockInformation(stock.getStockSymbol());
         	
         	BigDecimal netChangeInDollars = new BigDecimal(stockQuoteArray[4]);
         	BigDecimal currentNumberOfChares = stock.getNumberOfShares();
@@ -83,11 +66,11 @@ public class IndexController {
         	stockDisplay.setDaysTotalGain(dollarFormatter.format(daysTotalGain));
         	
         	stockDisplayList.add(stockDisplay);
-        }
+        }*/
         
-        stockDisplayList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
+        stockDisplayPojoList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
         
-        model.addAttribute("stocks", stockDisplayList);
+        model.addAttribute("stocks", stockDisplayPojoList);
         
         allStocksTotalGainInDollars.setScale(2, BigDecimal.ROUND_HALF_UP);
         model.addAttribute("daysTotalGainDollars", dollarFormatter.format(allStocksTotalGainInDollars));

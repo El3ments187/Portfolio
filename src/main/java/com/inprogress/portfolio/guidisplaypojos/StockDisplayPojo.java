@@ -1,30 +1,30 @@
 package com.inprogress.portfolio.guidisplaypojos;
 
+import java.math.BigDecimal;
+
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class StockDisplayPojo {
 
 	private String stockSymbol;
 	private String companyName;
-	private String lastPrice;
+	private BigDecimal lastPrice;
 	private String tradeTimestamp;
-	private String netChangeInDollars;
-	private String percentChange;
-	private String openPrice;
-	private String daysHigh;
-	private String daysLow;
-	private String closePrice;
-	private String fiftyTwoWeekHigh;
+	private BigDecimal netChangeInDollars;
+	private BigDecimal percentChange;
+	private BigDecimal openPrice;
+	private BigDecimal daysHigh;
+	private BigDecimal daysLow;
+	private BigDecimal closePrice;
+	private BigDecimal fiftyTwoWeekHigh;
 	private String fiftyTwoWeekHighDate;
-	private String fiftyTwoWeekLow;
+	private BigDecimal fiftyTwoWeekLow;
 	private String fiftyTwoWeekLowDate;
 	
-	private String stockPurchasePrice;
-	private String daysTotalGain;
-	private String numberOfShares;
+	private BigDecimal stockPurchasePrice;
+	private BigDecimal daysTotalGain;
+	private BigDecimal numberOfShares;
 }

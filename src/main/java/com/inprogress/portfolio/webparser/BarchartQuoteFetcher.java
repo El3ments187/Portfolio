@@ -1,22 +1,30 @@
 package com.inprogress.portfolio.webparser;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.barchart.ondemand.BarchartOnDemandClient;
 import com.barchart.ondemand.api.QuoteRequest;
 import com.barchart.ondemand.api.QuoteRequest.QuoteRequestMode;
 import com.barchart.ondemand.api.responses.Quote;
 import com.barchart.ondemand.api.responses.Quotes;
+import com.inprogress.portfolio.domain.Stock;
+import com.inprogress.portfolio.pojos.StockQuote;
 
 import lombok.extern.slf4j.Slf4j;
 
+@Service
 @Slf4j
 public class BarchartQuoteFetcher {
 	
 	String apiKey = "7256b6b69d37a29bccceacc5dc039f1e";
-	private final BarchartOnDemandClient onDemand = new BarchartOnDemandClient.Builder().apiKey(apiKey).baseUrl("https://marketdata.websol.barchart.com/").build();
-
-
+	private final BarchartOnDemandClient onDemand = new BarchartOnDemandClient.Builder().apiKey(apiKey)
+			.baseUrl("https://marketdata.websol.barchart.com/").build();
     
-    public String[] fetchCurrentPrice(String symbol) {
+/*    public String[] fetchCurrentStockInformation(String symbol) {
     	String[] quoteArray = new String[14];
     	
     	// Create a new QuoteRequest
@@ -51,11 +59,91 @@ public class BarchartQuoteFetcher {
 			log.debug("Quote : " + quoteArray[2]);
 			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	
     	return quoteArray;
+    }*/
+	
+	private String[] convertListOfStocksToStringArrray(List<Stock> stockList) {
+
+		// TODO : This will need refactored in the future to deal with more than 20 stock tickers
+		System.out.println("Size : " + stockList.size());
+		String[] stockTickerArray = new String[20];
+		for(int i = 0; i < stockList.size(); i++) {
+			String symbol = stockList.get(i).getStockSymbol();
+			System.out.println("Symbol : " + symbol);
+			stockTickerArray[i] = stockList.get(i).getStockSymbol();
+		}
+		
+		return stockTickerArray;
+	}
+    
+    public List<StockQuote> fetchMultpleCurrentStockInformation(List<Stock> stockList) {
+    	
+    	log.debug("fetchMultpleCurrentStockInformation reached.");
+    	// Create a new QuoteRequest
+    	final QuoteRequest.Builder builder = new QuoteRequest.Builder();
+    	
+    	
+    	String[] symbols = convertListOfStocksToStringArrray(stockList);
+    	
+    	System.out.println(symbols[0]);
+    	// Add symbols to the request
+    	builder.symbols(symbols);
+    	// Set mode to real-time
+    	builder.mode(QuoteRequestMode.DELAYED);
+    	
+    	// Fetch results
+    	Quotes quotes = null;
+    	try {
+			quotes = onDemand.fetch(builder.build());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	log.debug("Quotes : "+ quotes.toString());
+    	
+    	List<StockQuote> stockQuotes = new ArrayList<StockQuote>();
+    	
+    	for (Stock stock : stockList) {
+    		
+    		String stockSymbol = stock.getStockSymbol();
+    		
+    		Quote quote = quotes.bySymbol(stockSymbol);
+    		
+    		StockQuote stockQuote = new StockQuote();
+    		
+    		stockQuote.setSymbol(stockSymbol);
+    		stockQuote.setCompanyName(quote.getName());
+    		stockQuote.setLastPrice(quote.getLastPrice());
+    		stockQuote.setTradeTimestamp(quote.getTradeTimestamp());
+    		
+    		BigDecimal netChange = new BigDecimal(quote.getNetChange());
+    		stockQuote.setNetChange(netChange);
+    		stockQuote.setPercentChange(quote.getPercentChange());
+    		stockQuote.setDaysOpen(quote.getOpen());
+    		stockQuote.setDaysHigh(quote.getHigh());
+    		stockQuote.setDaysLow(quote.getLow());		
+    		stockQuote.setClosePrice(quote.getClose());
+    		stockQuote.setFiftyTwoWkHigh(quote.getFiftyTwoWkHigh());
+    		stockQuote.setFiftyTwoWkHighDate(quote.getFiftyTwoWkHighDate());
+    		stockQuote.setFiftyTwoWkLow(quote.getFiftyTwoWkLow());
+    		stockQuote.setFiftyTwoWkLowDate(quote.getFiftyTwoWkLowDate());
+    		
+    		BigDecimal numberOfShares = stock.getNumberOfShares();
+    		stockQuote.setStockPurchasePrice(numberOfShares);
+    		stockQuote.setNumberOfShares(stock.getNumberOfShares());
+    		
+    		BigDecimal daysTotalGain = netChange.multiply(numberOfShares);
+    		stockQuote.setDaysTotalGain(daysTotalGain);
+    		
+    		stockQuotes.add(stockQuote);
+    		
+    		log.debug("Quote - Symbol : " + stockQuote.getSymbol() + " Last Price : " + stockQuote.getLastPrice());
+    	}
+
+    	return stockQuotes;
     }
     
     // Saving code for now in case there are future issues with the Barchart API
