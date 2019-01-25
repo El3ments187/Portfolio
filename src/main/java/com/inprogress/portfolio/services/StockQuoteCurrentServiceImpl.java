@@ -1,7 +1,9 @@
 package com.inprogress.portfolio.services;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class StockQuoteCurrentServiceImpl {
+public class StockQuoteCurrentServiceImpl implements StockQuoteCurrentService {
 	
 	private StockService stockService;
 	
@@ -49,18 +51,19 @@ public class StockQuoteCurrentServiceImpl {
 		return stocks;
 	}
 	
-	public List<StockDisplayPojo> getSortedListOfStockDisplayPojosForIndexPage(){
+	@Override
+	public List<StockDisplayPojo> getSortedListOfStockDisplayPojosForDisplay(){
 		
-		//TODO: not sorted currently
 		List<Stock> stocks = getListOfStocks();
 		
 		List<StockDisplayPojo> stockDisplayPojoList = createStockDisplayPojoQuotes(stocks);
 		
+		stockDisplayPojoList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
+		
 		return stockDisplayPojoList;
 	}
 	
-	
-
+	@Override
 	public List<StockDisplayPojo> createStockDisplayPojoQuotes(List<Stock> stockList) {
 		log.debug("createStockDisplayPojoQuotes reached.");
 		
@@ -68,6 +71,9 @@ public class StockQuoteCurrentServiceImpl {
 		List<StockQuote> stockQuotes = fetcher.fetchMultpleCurrentStockInformation(stockList);
 		
 		List<StockDisplayPojo> stockDisplayPojoList = new ArrayList<StockDisplayPojo>();
+		
+        DecimalFormat dollarFormatter = new DecimalFormat("$#,##0.00");
+        dollarFormatter.setParseBigDecimal(true);
 		
 		for(StockQuote quote : stockQuotes) {
 			StockDisplayPojo stockDisplay = new StockDisplayPojo();
@@ -88,16 +94,15 @@ public class StockQuoteCurrentServiceImpl {
 			stockDisplay.setFiftyTwoWeekLowDate(quote.getFiftyTwoWkLowDate());
 			
 			stockDisplay.setStockPurchasePrice(quote.getStockPurchasePrice());
+			stockDisplay.setNumberOfShares(quote.getNumberOfShares());
+			stockDisplay.setDaysTotalGain(quote.getDaysTotalGain());
 			
 			stockDisplayPojoList.add(stockDisplay);
 			
 			log.debug("StockDisplayPojo created in StockQuoteCurrentServiceImpl - " + stockDisplay.getStockSymbol());
 		}
 		
-		
 		return stockDisplayPojoList;
-		
 	}
-
 
 }

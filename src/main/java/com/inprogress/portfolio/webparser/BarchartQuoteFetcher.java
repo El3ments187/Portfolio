@@ -67,9 +67,8 @@ public class BarchartQuoteFetcher {
 	
 	private String[] convertListOfStocksToStringArrray(List<Stock> stockList) {
 
-		// TODO : This will need refactored in the future to deal with more than 20 stock tickers
-		System.out.println("Size : " + stockList.size());
-		String[] stockTickerArray = new String[20];
+		String[] stockTickerArray = new String[stockList.size()];
+		
 		for(int i = 0; i < stockList.size(); i++) {
 			String symbol = stockList.get(i).getStockSymbol();
 			System.out.println("Symbol : " + symbol);
@@ -82,9 +81,9 @@ public class BarchartQuoteFetcher {
     public List<StockQuote> fetchMultpleCurrentStockInformation(List<Stock> stockList) {
     	
     	log.debug("fetchMultpleCurrentStockInformation reached.");
+    	
     	// Create a new QuoteRequest
     	final QuoteRequest.Builder builder = new QuoteRequest.Builder();
-    	
     	
     	String[] symbols = convertListOfStocksToStringArrray(stockList);
     	
@@ -92,7 +91,7 @@ public class BarchartQuoteFetcher {
     	// Add symbols to the request
     	builder.symbols(symbols);
     	// Set mode to real-time
-    	builder.mode(QuoteRequestMode.DELAYED);
+    	builder.mode(QuoteRequestMode.REAL_TIME);
     	
     	// Fetch results
     	Quotes quotes = null;

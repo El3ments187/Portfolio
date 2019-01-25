@@ -77,7 +77,7 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         Stock stock7 = new Stock();
         
         stock7.setStockSymbol("UPRO");
-        stock7.setNumberOfShares(new BigDecimal(45.0));
+        stock7.setNumberOfShares(new BigDecimal(105.0));
         stock7.setStockPurchasePrice(new BigDecimal(45.464));
         
         Stock stock8 = new Stock();

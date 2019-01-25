@@ -80,6 +80,12 @@
 		    <version>2.7.5</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/joda-time/joda-time -->
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

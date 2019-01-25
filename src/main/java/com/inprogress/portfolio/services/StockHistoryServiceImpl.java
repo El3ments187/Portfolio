@@ -1,13 +1,9 @@
 package com.inprogress.portfolio.services;
 
-import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.inprogress.portfolio.commands.StockCommand;
 import com.inprogress.portfolio.domain.Stock;
 import com.inprogress.portfolio.domain.StockHistory;
 import com.inprogress.portfolio.repositories.StockHistoryRepository;
