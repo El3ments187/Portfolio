@@ -65,26 +65,26 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         Stock stock5 = new Stock();
         
         stock5.setStockSymbol("PBF");
-        stock5.setNumberOfShares(new BigDecimal(229.96233));
-        stock5.setStockPurchasePrice(new BigDecimal(22.6807));
+        stock5.setNumberOfShares(new BigDecimal(231.76431));
+        stock5.setStockPurchasePrice(new BigDecimal(22.802));
         
         Stock stock6 = new Stock();
         
         stock6.setStockSymbol("PSX");
-        stock6.setNumberOfShares(new BigDecimal(51.0912));
-        stock6.setStockPurchasePrice(new BigDecimal(51.0912));
+        stock6.setNumberOfShares(new BigDecimal(51.87506));
+        stock6.setStockPurchasePrice(new BigDecimal(72.8843));
         
         Stock stock7 = new Stock();
         
         stock7.setStockSymbol("UPRO");
         stock7.setNumberOfShares(new BigDecimal(105.0));
-        stock7.setStockPurchasePrice(new BigDecimal(45.464));
+        stock7.setStockPurchasePrice(new BigDecimal(38.896));
         
         Stock stock8 = new Stock();
         
         stock8.setStockSymbol("VB");
-        stock8.setNumberOfShares(new BigDecimal(7.04547));
-        stock8.setStockPurchasePrice(new BigDecimal(108.9086));
+        stock8.setNumberOfShares(new BigDecimal(7.14295));
+        stock8.setStockPurchasePrice(new BigDecimal(109.2337));
         
         stocks.add(stock1);
         stocks.add(stock2);
