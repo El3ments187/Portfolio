@@ -1,7 +1,6 @@
 package com.inprogress.portfolio.services;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.inprogress.portfolio.domain.Stock;
 import com.inprogress.portfolio.guidisplaypojos.StockDisplayPojo;
 import com.inprogress.portfolio.pojos.StockQuote;
+import com.inprogress.portfolio.webparser.BarchartHistoryFetcher;
 import com.inprogress.portfolio.webparser.BarchartQuoteFetcher;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +22,16 @@ public class StockQuoteCurrentServiceImpl implements StockQuoteCurrentService {
 	
 	private StockService stockService;
 	
+	private BarchartQuoteFetcher barchartQuoteFetcher;
+	
+	private BarchartHistoryFetcher barchartHistoryFetcher;
+	
 	@Autowired
-	public StockQuoteCurrentServiceImpl(StockService stockService) {
+	public StockQuoteCurrentServiceImpl(StockService stockService, BarchartQuoteFetcher barchartQuoteFetcher, 
+			BarchartHistoryFetcher barchartHistoryFetcher) {
 		this.stockService = stockService;
+		this.barchartQuoteFetcher = barchartQuoteFetcher;
+		this.barchartHistoryFetcher = barchartHistoryFetcher;
 	}
 	
 /*	@Override
@@ -59,6 +66,22 @@ public class StockQuoteCurrentServiceImpl implements StockQuoteCurrentService {
 		List<StockDisplayPojo> stockDisplayPojoList = createStockDisplayPojoQuotes(stocks);
 		
 		stockDisplayPojoList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
+				
+		return stockDisplayPojoList;
+	}
+	
+	@Override
+	public List<StockDisplayPojo> getSortedListOfStockDisplayPojosForDisplayWithYTDGains(){
+		
+		List<Stock> stocks = getListOfStocks();
+		
+		List<StockDisplayPojo> stockDisplayPojoList = createStockDisplayPojoQuotes(stocks);
+		
+		stockDisplayPojoList = addYTDGainsToPojos(stockDisplayPojoList);
+		
+		if(stockDisplayPojoList != null) {
+			stockDisplayPojoList.sort(Comparator.comparing(StockDisplayPojo::getStockSymbol));
+		}
 		
 		return stockDisplayPojoList;
 	}
@@ -67,13 +90,9 @@ public class StockQuoteCurrentServiceImpl implements StockQuoteCurrentService {
 	public List<StockDisplayPojo> createStockDisplayPojoQuotes(List<Stock> stockList) {
 		log.debug("createStockDisplayPojoQuotes reached.");
 		
-		BarchartQuoteFetcher fetcher = new BarchartQuoteFetcher();
-		List<StockQuote> stockQuotes = fetcher.fetchMultpleCurrentStockInformation(stockList);
+		List<StockQuote> stockQuotes = barchartQuoteFetcher.fetchMultpleCurrentStockInformation(stockList);
 		
 		List<StockDisplayPojo> stockDisplayPojoList = new ArrayList<StockDisplayPojo>();
-		
-        DecimalFormat dollarFormatter = new DecimalFormat("$#,##0.00");
-        dollarFormatter.setParseBigDecimal(true);
 		
 		for(StockQuote quote : stockQuotes) {
 			StockDisplayPojo stockDisplay = new StockDisplayPojo();
@@ -103,6 +122,16 @@ public class StockQuoteCurrentServiceImpl implements StockQuoteCurrentService {
 		}
 		
 		return stockDisplayPojoList;
+	}
+	
+	private List<StockDisplayPojo> addYTDGainsToPojos(List<StockDisplayPojo> stockDisplayPojoList) {
+		List<StockDisplayPojo> pojoList = new ArrayList<>();
+		
+		for(StockDisplayPojo displayPojo : stockDisplayPojoList) {
+			pojoList.add(barchartHistoryFetcher.getYTDGains(displayPojo, false));
+		}
+		
+		return pojoList;
 	}
 
 }

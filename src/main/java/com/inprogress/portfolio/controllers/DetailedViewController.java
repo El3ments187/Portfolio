@@ -18,22 +18,22 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Controller
-public class IndexController {
+public class DetailedViewController {
 
     private final StockQuoteCurrentServiceImpl stockQuoteService;
     
     private final StockCalcUtilService stockCalcUtilService;
 
-    public IndexController(StockQuoteCurrentServiceImpl stockQuoteService, StockCalcUtilService stockCalcUtilService) {
+    public DetailedViewController(StockQuoteCurrentServiceImpl stockQuoteService, StockCalcUtilService stockCalcUtilService) {
         this.stockQuoteService = stockQuoteService;
         this.stockCalcUtilService = stockCalcUtilService;
     }
 
-    @RequestMapping({"", "/", "/index"})
-    public String getIndexPage(Model model) {
-        log.debug("Getting Index page");
+    @RequestMapping({"stock/detailed"})
+    public String getPortfolioDetailedPage(Model model) {
+        log.debug("Getting Detailed page");
         
-        List<StockDisplayPojo> stockDisplayPojoList = stockQuoteService.getSortedListOfStockDisplayPojosForDisplay();
+        List<StockDisplayPojo> stockDisplayPojoList = stockQuoteService.getSortedListOfStockDisplayPojosForDisplayWithYTDGains();
         
         BigDecimal allStocksTotalGainInDollars = stockCalcUtilService.calculateTotalPortfolioGain(stockDisplayPojoList);
         
@@ -44,7 +44,11 @@ public class IndexController {
         model.addAttribute("daysTotalGainDollars", allStocksTotalGainInDollars);
         
         log.debug("Day's Total Gain in Dollars : " + allStocksTotalGainInDollars.toString());
-
-        return "index";
+        
+        //BarchartHistoryFetcher history = new BarchartHistoryFetcher();
+        
+        //history.getHistoryForSymbolAndDate("BP", null, null, null);
+        
+        return "stock/detailed";
     }
 }

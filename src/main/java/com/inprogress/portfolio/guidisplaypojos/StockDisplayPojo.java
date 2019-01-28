@@ -27,4 +27,7 @@ public class StockDisplayPojo {
 	private BigDecimal stockPurchasePrice;
 	private BigDecimal daysTotalGain;
 	private BigDecimal numberOfShares;
+	private BigDecimal totalGain;
+	private BigDecimal percentChangeYTD;
+	private BigDecimal dollarChangeYTD;
 }

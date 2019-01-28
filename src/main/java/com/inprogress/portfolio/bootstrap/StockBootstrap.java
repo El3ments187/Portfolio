@@ -126,37 +126,5 @@ public class StockBootstrap implements ApplicationListener<ContextRefreshedEvent
         stockHistory.add(stock3);
         
         return stockHistory;
-    }
-    
-    private List<StockHistory> getStockHistoryYesterday() {
-
-        List<StockHistory> stockHistory = new ArrayList<>(2);
-        
-        LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minus(Period.ofDays(1));
-
-        StockHistory stock1 = new StockHistory();
-        
-        stock1.setStockSymbol("AAPL");
-        stock1.setClosingPrice(new BigDecimal(13));
-        stock1.setDate(yesterday);
-
-        StockHistory stock2 = new StockHistory();
-        
-        stock2.setStockSymbol("F");
-        stock2.setClosingPrice(new BigDecimal(13));
-        stock2.setDate(yesterday);
-        
-        StockHistory stock3 = new StockHistory();
-        
-        stock3.setStockSymbol("BP");
-        stock3.setClosingPrice(new BigDecimal(13));
-        stock3.setDate(yesterday);
-        
-        stockHistory.add(stock1);
-        stockHistory.add(stock2);
-        stockHistory.add(stock3);
-        
-        return stockHistory;
     }*/
 }

@@ -48,7 +48,7 @@ public class StockController {
     }
     
     @RequestMapping({"stock/modify"})
-    public String getIndexPage(Model model) {
+    public String getPortfolioModificationPage(Model model) {
         log.debug("Getting Portfolio Modify page");
 
         Set<Stock> stocks = stockService.getStocks();

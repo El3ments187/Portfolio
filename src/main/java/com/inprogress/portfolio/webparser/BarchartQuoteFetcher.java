@@ -87,7 +87,6 @@ public class BarchartQuoteFetcher {
     	
     	String[] symbols = convertListOfStocksToStringArrray(stockList);
     	
-    	System.out.println(symbols[0]);
     	// Add symbols to the request
     	builder.symbols(symbols);
     	// Set mode to real-time
@@ -100,9 +99,7 @@ public class BarchartQuoteFetcher {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	
-    	log.debug("Quotes : "+ quotes.toString());
-    	
+    	    	
     	List<StockQuote> stockQuotes = new ArrayList<StockQuote>();
     	
     	for (Stock stock : stockList) {
@@ -134,6 +131,7 @@ public class BarchartQuoteFetcher {
     		stockQuote.setStockPurchasePrice(numberOfShares);
     		stockQuote.setNumberOfShares(stock.getNumberOfShares());
     		
+    		// Calculating Day's Total Gain here to avoid additional processing for summaries
     		BigDecimal daysTotalGain = netChange.multiply(numberOfShares);
     		stockQuote.setDaysTotalGain(daysTotalGain);
     		
